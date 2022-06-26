@@ -31,7 +31,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import Navigation from './src/components/Navigation';
 import InputTodo from './src/InputTodo';
-import ListTodo from './src/ListTodo';
+import ListTodo, {IEdit} from './src/ListTodo';
 
 export interface ITodo {
   id: string;
@@ -42,7 +42,8 @@ const App = () => {
   const [text, setText] = useState<string>('');
   const isDarkMode = useColorScheme() === 'dark';
   const [todo, setTodo] = useState<ITodo[]>([]);
-
+  const [edit, setEdit] = useState({} as ITodo);
+  const [isEdit, setIsEdit] = useState<boolean>(false);
   const backgroundStyle = {
     backgroundColor: isDarkMode ? '#333' : Colors.lighter,
   };
@@ -54,16 +55,33 @@ const App = () => {
       id: id.toString(),
       name: text,
     };
-    setTodo([...todo, Data]);
-    setText('');
-    console.log(todo, '< todo');
+    if (isEdit === true) {
+      const Edit = todo.map(item =>
+        item.id === edit.id ? {...item, name: text} : item,
+      );
+      console.log(Edit, '< this is edit');
+      setTodo(Edit);
+      setIsEdit(false);
+      setText('');
+    } else {
+      setTodo([...todo, Data]);
+      setText('');
+      console.log(todo, '< todo');
+    }
   };
 
   const handleClick = (id: string) => {
-    console.log(id);
     const deleted = todo.filter(i => i.id !== id);
     setTodo(deleted);
     //
+  };
+
+  // EDIT
+  const handleEdit = (item: ITodo) => {
+    console.log(item.id);
+    setText(item.name);
+    setIsEdit(true);
+    setEdit(item);
   };
 
   return (
@@ -86,7 +104,7 @@ const App = () => {
           height: 1,
         }}></View>
 
-      <ListTodo handleClick={handleClick} todo={todo} />
+      <ListTodo handleEdit={handleEdit} handleClick={handleClick} todo={todo} />
       <Navigation />
     </View>
   );

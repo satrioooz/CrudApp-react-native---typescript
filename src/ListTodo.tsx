@@ -7,10 +7,14 @@ interface Todo {
   name: string;
 }
 
+export interface IEdit {
+  item: Todo;
+}
+
 interface IProps {
   todo: Todo[];
-  // setTodo: React.Dispatch<React.SetStateAction<ITodo[]>>;
   handleClick: (c: string) => void;
+  handleEdit: (item: ITodo) => void;
 }
 
 const styles = StyleSheet.create({
@@ -32,14 +36,7 @@ const styles = StyleSheet.create({
 {
 }
 
-const ListTodo: FC<IProps> = ({todo, handleClick}) => {
-  // const handleClick = (id: string) => {
-  //   console.log(id);
-  //   const deleted = todo.filter(i => i.id !== id);
-  //   setTodo([...todo, deleted]);
-  //   // setTodo(todo.filter(i => i.id !== id));
-  //   // setTodo([...todo, deleted]);
-  // };
+const ListTodo: FC<IProps> = ({todo, handleEdit, handleClick}) => {
   return (
     <View style={styles.container}>
       {todo.length === 0 && (
@@ -68,9 +65,14 @@ const ListTodo: FC<IProps> = ({todo, handleClick}) => {
               flex: 1,
               alignItems: 'center',
             }}>
-            <Text>{item.name}</Text>
-            <View>
-              <Text onPress={() => handleClick(item.id)}>🗑</Text>
+            <Text style={{fontWeight: '500'}}>{item.name}</Text>
+            <View style={{flexDirection: 'row'}}>
+              <Text
+                style={{marginHorizontal: 8}}
+                onPress={() => handleClick(item.id)}>
+                🗑
+              </Text>
+              <Text onPress={() => handleEdit(item)}>✍️</Text>
 
               {/* <Icon name="trash" size={30} /> */}
             </View>
