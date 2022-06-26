@@ -2,10 +2,6 @@ import React, {FC} from 'react';
 import {Text, Image, StyleSheet, View, Button} from 'react-native';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import {ITodo} from '../App';
-// interface Todo {
-//   id: string;
-//   name: string;
-// }
 
 export interface IEdit {
   item: ITodo;
