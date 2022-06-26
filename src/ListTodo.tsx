@@ -2,18 +2,18 @@ import React, {FC} from 'react';
 import {Text, Image, StyleSheet, View, Button} from 'react-native';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import {ITodo} from '../App';
-interface Todo {
-  id: string;
-  name: string;
-}
+// interface Todo {
+//   id: string;
+//   name: string;
+// }
 
 export interface IEdit {
-  item: Todo;
+  item: ITodo;
 }
 
 interface IProps {
-  todo: Todo[];
-  handleClick: (c: string) => void;
+  todo: ITodo[];
+  handleDelet: (c: string) => void;
   handleEdit: (item: ITodo) => void;
 }
 
@@ -28,15 +28,13 @@ const styles = StyleSheet.create({
     height: 40,
     padding: 10,
     marginTop: 10,
-    // alignItems: 'center',
-    // justifyContent: 'flex-start',
   },
 });
 
 {
 }
 
-const ListTodo: FC<IProps> = ({todo, handleEdit, handleClick}) => {
+const ListTodo: FC<IProps> = ({todo, handleEdit, handleDelet}) => {
   return (
     <View style={styles.container}>
       {todo.length === 0 && (
@@ -47,7 +45,6 @@ const ListTodo: FC<IProps> = ({todo, handleEdit, handleClick}) => {
               height: 200,
               flexDirection: 'row',
               justifyContent: 'center',
-              // display: 'flex',
             }}
             resizeMode="contain"
             source={{
@@ -56,7 +53,7 @@ const ListTodo: FC<IProps> = ({todo, handleEdit, handleClick}) => {
           />
         </View>
       )}
-      {todo.map((item: Todo, id: number) => (
+      {todo.map((item: ITodo, id: number) => (
         <View key={id} style={styles.card}>
           <View
             style={{
@@ -69,12 +66,10 @@ const ListTodo: FC<IProps> = ({todo, handleEdit, handleClick}) => {
             <View style={{flexDirection: 'row'}}>
               <Text
                 style={{marginHorizontal: 8}}
-                onPress={() => handleClick(item.id)}>
+                onPress={() => handleDelet(item.id)}>
                 🗑
               </Text>
               <Text onPress={() => handleEdit(item)}>✍️</Text>
-
-              {/* <Icon name="trash" size={30} /> */}
             </View>
           </View>
         </View>

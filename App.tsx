@@ -59,21 +59,18 @@ const App = () => {
       const Edit = todo.map(item =>
         item.id === edit.id ? {...item, name: text} : item,
       );
-      console.log(Edit, '< this is edit');
       setTodo(Edit);
       setIsEdit(false);
       setText('');
     } else {
       setTodo([...todo, Data]);
       setText('');
-      console.log(todo, '< todo');
     }
   };
 
-  const handleClick = (id: string) => {
+  const handleDelet = (id: string) => {
     const deleted = todo.filter(i => i.id !== id);
     setTodo(deleted);
-    //
   };
 
   // EDIT
@@ -104,7 +101,7 @@ const App = () => {
           height: 1,
         }}></View>
 
-      <ListTodo handleEdit={handleEdit} handleClick={handleClick} todo={todo} />
+      <ListTodo handleEdit={handleEdit} handleDelet={handleDelet} todo={todo} />
       <Navigation />
     </View>
   );
